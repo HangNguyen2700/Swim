@@ -10,7 +10,7 @@ package entity
  */
 
 class Player (var name : String,
-              var score : Int = 0,
+              var score : Double = 0.0,
               var hasKnocked : Boolean = false
 ) {
 
