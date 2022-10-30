@@ -9,9 +9,9 @@ package entity
  * knocked yet)
  */
 
-class Player (var name : String,
-              var score : Double = 0.0,
-              var hasKnocked : Boolean = false
+class Player (private var name : String,
+              private var score : Double = 0.0,
+              private var hasKnocked : Boolean = false
 ) {
 
 }
