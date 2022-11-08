@@ -14,4 +14,28 @@ data class Card (val suit: CardSuit, val value: CardValue) {
      * (i.e., the order in which the suits are declared in the enum class)
      */
     operator fun compareTo(other: Card) = this.value.ordinal - other.value.ordinal
+
+    fun equals(other: Card): Boolean {
+        return this.value.ordinal == other.value.ordinal && this.suit.ordinal == other.suit.ordinal
+    }
+
+    fun equalsSuit(other: Card): Boolean {
+        return this.suit.ordinal == other.suit.ordinal
+    }
+
+    fun toDoubleValue() : Double {
+        var doubleValue = when(value.toString()){
+            "2" -> 2.0
+            "3" -> 3.0
+            "4" -> 4.0
+            "5" -> 5.0
+            "6" -> 6.0
+            "7" -> 7.0
+            "8" -> 8.0
+            "9" -> 9.0
+            "A" -> 11.0
+            else -> 10.0
+        }
+        return doubleValue
+    }
 }
