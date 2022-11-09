@@ -3,8 +3,20 @@ package service
 import entity.*
 
 
+/**
+ * Game service
+ *
+ * @property rootService
+ * @constructor Create empty Game service
+ */
 class GameService(private val rootService: RootService) : AbstractRefreshingService() {
 
+    /**
+     * Set up and start new game, in which List of Players is initialized and Cards are distributed in separate stacks
+     *
+     * @param playerNames List of entered player names
+     * @param allCards List of 32 shuffled cards to play with
+     */
     fun startGame(
         playerNames: MutableList<String>,
         allCards: MutableList<Card> = defaultRandomCardList() as MutableList<Card>
@@ -29,6 +41,10 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
 //        onAllRefreshables { refreshAfterStartNewGame() }
     }
 
+    /**
+     * Creates a shuffled 32 cards list of all four suits and cards
+     * from 7 to Ace
+     */
     private fun defaultRandomCardList() = List(32) { index ->
         Card(
             CardSuit.values()[index / 8],
@@ -42,6 +58,11 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
         return winner
     }
 
+    /**
+     * End game and show the winner in GUI
+     *
+     * @return winner
+     */
     fun endGame(): Player? {
         val game = rootService.currentGame
         checkNotNull(game) { "No game currently running." }

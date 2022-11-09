@@ -17,10 +17,16 @@ class Player {
     constructor(name: String, playerCards: MutableList<Card>) {
         if (name.isEmpty()) throw IllegalArgumentException("Player's name must be entered")
         if (playerCards.size != 3) throw IllegalArgumentException("Player must have exact 3 cards")
+
         this.name = name
         this.playerCards = playerCards
     }
 
+    /**
+     * Get name
+     *
+     * @return
+     */
     fun getName(): String {
         return name
     }
@@ -29,6 +35,12 @@ class Player {
         return score
     }
 
+    /**
+     * Set score
+     *
+     * @param newScore
+     * @return
+     */
     fun setScore(newScore: Double): Double {
         score = newScore
         return score
@@ -49,7 +61,7 @@ class Player {
 
     fun setPlayerCards(playerCards: MutableList<Card>) {
         if (playerCards.size != 3) {
-            throw IllegalArgumentException("Player muss be have exact 3 cards")
+            throw IllegalArgumentException("Player muss have exact 3 cards")
         }
         this.playerCards = playerCards
     }

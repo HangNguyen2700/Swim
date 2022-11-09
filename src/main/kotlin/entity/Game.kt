@@ -22,17 +22,22 @@ class Game {
         this.unusedCards = unusedCards
         currentPlayer = players.first()
     }
+
+    /**
+     *
+     */
     fun getPlayers(): MutableList<Player> {
         return players
     }
 
-    fun getCurrentPlayer(): Player? {
+    fun getCurrentPlayer(): Player {
         return currentPlayer
     }
 
     fun nextPlayer(): Player {
         var index = (players.indexOf(currentPlayer) + 1) / players.size
-        return players[index]
+        currentPlayer = players[index]
+        return currentPlayer
     }
 
     fun getPassCounter(): Int {
