@@ -2,7 +2,6 @@ package service
 
 import entity.*
 
-
 /**
  * Game service
  *
@@ -38,7 +37,7 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
         var game = Game(players, openCards, unusedCards)
         rootService.currentGame = game
 
-//        onAllRefreshables { refreshAfterStartNewGame() }
+        onAllRefreshables { this.refreshAfterStartGame() }
     }
 
     /**
@@ -67,6 +66,7 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
         val game = rootService.currentGame
         checkNotNull(game) { "No game currently running." }
 
+        onAllRefreshables { this.refreshAfterEndGame() }
         return findWinner(game.getPlayers())
     }
 

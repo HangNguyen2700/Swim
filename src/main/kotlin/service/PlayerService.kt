@@ -51,6 +51,7 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
         }
 
         sum = card0.toDoubleValue() + card1.toDoubleValue() + card2.toDoubleValue()
+        onAllRefreshables { this.refreshAfterUpdateScore() }
         return sum
     }
 
@@ -80,7 +81,9 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
 
         currentGame!!.resetPassCounter()
         currentPlayer!!.setScore(updateScore())
-//        currentGame!!.nextPlayer()
+        currentGame!!.nextPlayer()
+
+        onAllRefreshables { this.refreshAfterExchangeOneCard() }
     }
 
     /**
@@ -93,7 +96,9 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
 
         currentPlayer!!.setScore(updateScore())
         currentGame!!.resetPassCounter()
-//        currentGame!!.nextPlayer()
+        currentGame!!.nextPlayer()
+
+        onAllRefreshables { this.refreshAfterExchangeAllCards() }
     }
 
     /**
@@ -134,7 +139,9 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
         }
 
         currentPlayer!!.setScore(updateScore())
-//        currentGame!!.nextPlayer()
+        currentGame!!.nextPlayer()
+
+        onAllRefreshables { this.refreshAfterPass() }
     }
 
     /**
@@ -150,7 +157,9 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
         }
         currentPlayer!!.setHasKnocked()
         currentGame!!.resetPassCounter()
-//        currentGame?.nextPlayer()
+        currentGame!!.nextPlayer()
+
+        onAllRefreshables { this.refreshAfterKnock() }
     }
 
 

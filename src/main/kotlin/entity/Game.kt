@@ -1,11 +1,10 @@
 package entity
 
+import service.AbstractRefreshingService
+
 /**
  * Entity class represents a game state of "Swim".
  *
- * @param passCounter count number of players who continuously pass and is initialized with 0
- * @param openCards list of 3 cards in the middle that will initially be exchanged
- * @param unusedCards list of new cards, must be greater than or equal to 0
  */
 
 class Game {
@@ -37,6 +36,7 @@ class Game {
     fun nextPlayer(): Player {
         var index = (players.indexOf(currentPlayer) + 1) / players.size
         currentPlayer = players[index]
+//        onAllRefreshables { this.refreshAfterNextPlayer() }
         return currentPlayer
     }
 

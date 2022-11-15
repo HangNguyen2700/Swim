@@ -1,6 +1,7 @@
 package service
 
-import javax.security.auth.Refreshable
+import view.Refreshable
+//import javax.security.auth.Refreshable
 
 abstract class AbstractRefreshingService {
     private val refreshables = mutableListOf<Refreshable>()
