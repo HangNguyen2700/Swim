@@ -19,6 +19,10 @@ data class Card (val suit: CardSuit, val value: CardValue) {
         return this.value.ordinal == other.value.ordinal && this.suit.ordinal == other.suit.ordinal
     }
 
+    fun equalsValue(other: Card): Boolean {
+        return this.value.ordinal == other.value.ordinal
+    }
+
     fun equalsSuit(other: Card): Boolean {
         return this.suit.ordinal == other.suit.ordinal
     }

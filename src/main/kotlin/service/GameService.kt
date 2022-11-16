@@ -1,6 +1,7 @@
 package service
 
 import entity.*
+import javax.swing.plaf.multi.MultiTabbedPaneUI
 
 /**
  * Game service
@@ -52,9 +53,9 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
     }.shuffled()
 
 
-    private fun findWinner(players: List<Player>): Player? {
-        var winner = players.maxByOrNull { player: Player -> player.getScore() }
-        return winner
+    private fun findWinners(players: MutableList<Player>): MutableList<Player> {
+        var winners = players.sortedByDescending {player: Player -> player.getScore() }.toMutableList()
+        return winners
     }
 
     /**
@@ -62,12 +63,12 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
      *
      * @return winner
      */
-    fun endGame() {
+    fun endGame() : MutableList<Player> {
         val game = rootService.currentGame
         checkNotNull(game) { "No game currently running." }
 
-        onAllRefreshables { this.refreshAfterEndGame() }
-        findWinner(game.getPlayers())
+       // onAllRefreshables { this.refreshAfterEndGame() }
+        return findWinners(game.getPlayers())
     }
 
 }

@@ -58,16 +58,6 @@ class Game {
         return openCards
     }
 
-//    fun setOpenCards(openCards: MutableList<Card>) {
-////        if (openCards.size != 3) {
-////            throw IllegalArgumentException("Player muss have exact 3 cards")
-////        }
-//        this.openCards.clear()
-//        this.openCards.addAll(openCards)
-////        for(i in 0..2) {
-////            this.openCards.add(openCards[i])
-////        }
-//    }
 
     fun getUnusedCards(): MutableList<Card> {
         return unusedCards

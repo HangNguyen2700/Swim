@@ -186,4 +186,21 @@ class ServiceTest {
 
     }
 
+    @Test
+    fun testEndGame(){
+        val rootService = setUpGame()
+        val playerService = PlayerService(rootService)
+        val gameService = GameService(rootService)
+        val game = rootService.currentGame!!
+
+        playerService.pass()
+        game.nextPlayer()
+        playerService.pass()
+        game.nextPlayer()
+        playerService.pass()
+
+        val end = gameService.endGame() // list of player
+        end.forEach{player -> println(player.getName() + player.getScore())}
+    }
+
 }

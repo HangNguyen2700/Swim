@@ -18,7 +18,7 @@ class SwimNewGameScene : MenuScene(), Refreshable {
     private val buttonsGrid = GridPane<UIComponent>(columns = 3, rows = 1)
 
     private val labelFont = Font(30)
-    private val buttonFont = Font(30, color = Color.WHITE)
+    private val buttonTextFont = Font(30, color = Color.WHITE)
 
     private val headLineLabel = Label(
         text = "NEW GAME",
@@ -94,7 +94,7 @@ class SwimNewGameScene : MenuScene(), Refreshable {
     val startButton: Button = Button(
         width = 300, height = 100,
         text = "Start Game",
-        font = buttonFont
+        font = buttonTextFont
     ).apply {
         visual = ColorVisual(70, 130, 180)
     }
@@ -102,7 +102,7 @@ class SwimNewGameScene : MenuScene(), Refreshable {
     val quitButton: Button = Button(
         width = 300, height = 100,
         text = "Quit Game",
-        font = buttonFont
+        font = buttonTextFont
     ).apply {
         visual = ColorVisual(70, 130, 180)
     }
