@@ -16,22 +16,27 @@ class ServiceTest {
 
         val cards = mutableListOf<Card>(
 
-            Card(CardSuit.CLUBS, CardValue.QUEEN),
+            //Bob
+            Card(CardSuit.CLUBS, CardValue.QUEEN), /*Card(CardSuit.SPADES, CardValue.SEVEN),*/
             Card(CardSuit.SPADES, CardValue.TEN),
             Card(CardSuit.DIAMONDS, CardValue.SEVEN),
 
+            //Alice
             Card(CardSuit.CLUBS, CardValue.EIGHT),
             Card(CardSuit.CLUBS, CardValue.NINE),
             Card(CardSuit.HEARTS, CardValue.KING),
 
+            //Ana
             Card(CardSuit.DIAMONDS, CardValue.QUEEN),
             Card(CardSuit.SPADES, CardValue.QUEEN),
             Card(CardSuit.DIAMONDS, CardValue.JACK),
 
-            Card(CardSuit.SPADES, CardValue.SEVEN),
+            //Open Cards
+            Card(CardSuit.SPADES, CardValue.SEVEN), /*Card(CardSuit.CLUBS, CardValue.QUEEN)*/
             Card(CardSuit.DIAMONDS, CardValue.KING),
             Card(CardSuit.DIAMONDS, CardValue.NINE),
 
+            //Unused Cards
             Card(CardSuit.SPADES, CardValue.EIGHT),
             Card(CardSuit.HEARTS, CardValue.TEN),
             Card(CardSuit.HEARTS, CardValue.EIGHT),
@@ -69,6 +74,10 @@ class ServiceTest {
     fun testStartGame() {
         val game = setUpGame().currentGame!!
 
+        println(game.getCurrentPlayer().getPlayerCards())
+        println(game.getOpenCards().size)
+        println(game.getUnusedCards().size)
+
         assertEquals("Alice", game.getPlayers()[1].getName())
         assertEquals(3, game.getOpenCards().size)
         assertEquals(20, game.getUnusedCards().size)
@@ -85,7 +94,8 @@ class ServiceTest {
         //currentPlayer: Bob
         playerService.exchangeOneCard(2, 1)
 
-        assertEquals(Card(CardSuit.DIAMONDS, CardValue.KING), game.getCurrentPlayer()!!.getPlayerCards()[2])
+        println(game.getCurrentPlayer().getPlayerCards())
+        assertEquals(Card(CardSuit.DIAMONDS, CardValue.KING), game.getCurrentPlayer().getPlayerCards()[2])
         assertEquals(Card(CardSuit.DIAMONDS, CardValue.SEVEN), game.getOpenCards()[1])
     }
 
@@ -95,11 +105,24 @@ class ServiceTest {
         val playerService = PlayerService(rootService)
         val game = rootService.currentGame!!
 
-        //currentPlayer: Bob (without nextPlayer in exchangeAllCards)
+        //currentPlayer: Bob, because setupGame -> startGame -> currentPlayer starts always by Bob
         playerService.exchangeAllCards()
 
-        assertEquals(Card(CardSuit.DIAMONDS, CardValue.KING), game.getCurrentPlayer()!!.getPlayerCards()[1])
+        assertEquals(Card(CardSuit.DIAMONDS, CardValue.KING), game.getCurrentPlayer().getPlayerCards()[1])
         assertEquals(Card(CardSuit.DIAMONDS, CardValue.SEVEN), game.getOpenCards()[2])
+    }
+
+    @Test
+    fun testNextPlayer(){
+        val rootService = setUpGame()
+        val playerService = PlayerService(rootService)
+        val game = rootService.currentGame!!
+
+        //Bob
+        game.nextPlayer()
+        //Alice
+
+        assertEquals("Alice",game.getCurrentPlayer().getName())
     }
 
     @Test

@@ -62,12 +62,12 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
      *
      * @return winner
      */
-    fun endGame(): Player? {
+    fun endGame() {
         val game = rootService.currentGame
         checkNotNull(game) { "No game currently running." }
 
         onAllRefreshables { this.refreshAfterEndGame() }
-        return findWinner(game.getPlayers())
+        findWinner(game.getPlayers())
     }
 
 }

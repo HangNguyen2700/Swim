@@ -34,7 +34,7 @@ class Game {
     }
 
     fun nextPlayer(): Player {
-        var index = (players.indexOf(currentPlayer) + 1) / players.size
+        var index = (players.indexOf(currentPlayer) + 1) % players.size
         currentPlayer = players[index]
 //        onAllRefreshables { this.refreshAfterNextPlayer() }
         return currentPlayer
@@ -57,6 +57,17 @@ class Game {
     fun getOpenCards(): MutableList<Card> {
         return openCards
     }
+
+//    fun setOpenCards(openCards: MutableList<Card>) {
+////        if (openCards.size != 3) {
+////            throw IllegalArgumentException("Player muss have exact 3 cards")
+////        }
+//        this.openCards.clear()
+//        this.openCards.addAll(openCards)
+////        for(i in 0..2) {
+////            this.openCards.add(openCards[i])
+////        }
+//    }
 
     fun getUnusedCards(): MutableList<Card> {
         return unusedCards

@@ -81,7 +81,7 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
 
         currentGame!!.resetPassCounter()
         currentPlayer!!.setScore(updateScore())
-        currentGame!!.nextPlayer()
+//        currentGame!!.nextPlayer()
 
         onAllRefreshables { this.refreshAfterExchangeOneCard() }
     }
@@ -96,7 +96,7 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
 
         currentPlayer!!.setScore(updateScore())
         currentGame!!.resetPassCounter()
-        currentGame!!.nextPlayer()
+//        currentGame!!.nextPlayer()
 
         onAllRefreshables { this.refreshAfterExchangeAllCards() }
     }
@@ -139,7 +139,7 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
         }
 
         currentPlayer!!.setScore(updateScore())
-        currentGame!!.nextPlayer()
+//        currentGame!!.nextPlayer()
 
         onAllRefreshables { this.refreshAfterPass() }
     }
@@ -157,7 +157,7 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
         }
         currentPlayer!!.setHasKnocked()
         currentGame!!.resetPassCounter()
-        currentGame!!.nextPlayer()
+//        currentGame!!.nextPlayer()
 
         onAllRefreshables { this.refreshAfterKnock() }
     }
