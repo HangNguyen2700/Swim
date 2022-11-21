@@ -37,8 +37,8 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
 
         var game = Game(players, openCards, unusedCards)
         rootService.currentGame = game
-//        game.resetPassCounter()
-//        game.resetCurrentPlayer()
+        game.resetCurrentPlayer()
+        game.resetPassCounter()
 
         onAllRefreshables { this.refreshAfterStartGame() }
     }
@@ -76,11 +76,12 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
      *
      * @return winner
      */
-    fun endGame() {
+    fun endGame() : MutableList<Player> {
         val game = rootService.currentGame
         checkNotNull(game) { "No game is currently running." }
 
         onAllRefreshables { this.refreshAfterEndGame(findWinners(game.getPlayers())) }
+        return findWinners(game.getPlayers())
     }
 
 }

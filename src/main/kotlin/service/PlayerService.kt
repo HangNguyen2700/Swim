@@ -14,7 +14,6 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
     private var gameService = rootService.gameService
     private var currentGame = rootService.currentGame
 
-
     /**
      * Update score of current player and is called after current player's cards were updated
      *
@@ -97,12 +96,11 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
      *
      */
     fun exchangeAllCards() {
-        var currentPlayer = currentGame?.getCurrentPlayer()
+        var currentPlayer = currentGame!!.getCurrentPlayer()
 
-        checkNotNull(currentPlayer) { "No player currently playing." }
-        currentPlayer!!.getPlayerCards().forEachIndexed { index, _ -> exchangePlayerCard(index, index) }
+        currentPlayer.getPlayerCards().forEachIndexed { index, _ -> exchangePlayerCard(index, index) }
 
-        currentPlayer!!.setScore(updateScore())
+        currentPlayer.setScore(updateScore())
         currentGame!!.resetPassCounter()
 //        currentGame!!.nextPlayer()
 
