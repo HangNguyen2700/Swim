@@ -53,7 +53,7 @@ class SwimNewGameScene : MenuScene(), Refreshable {
 
     private val playerLabels = listOf<Label>(p1Label, p2Label, p3Label, p4Label)
 
-    private val p1Input: TextField = TextField(
+    val p1Input: TextField = TextField(
         width = 400, height = 50,
         text = ""
     ).apply {
@@ -62,7 +62,7 @@ class SwimNewGameScene : MenuScene(), Refreshable {
         }
     }
 
-    private val p2Input: TextField = TextField(
+    val p2Input: TextField = TextField(
         width = 400, height = 50,
         text = ""
     ).apply {
@@ -71,7 +71,7 @@ class SwimNewGameScene : MenuScene(), Refreshable {
         }
     }
 
-    private val p3Input: TextField = TextField(
+    val p3Input: TextField = TextField(
         width = 400, height = 50,
         text = ""
     ).apply {
@@ -80,7 +80,7 @@ class SwimNewGameScene : MenuScene(), Refreshable {
         }
     }
 
-    private val p4Input: TextField = TextField(
+    val p4Input: TextField = TextField(
         width = 400, height = 50,
         text = ""
     ).apply {
@@ -89,7 +89,7 @@ class SwimNewGameScene : MenuScene(), Refreshable {
         }
     }
 
-    private val playerInputs = listOf<TextField>(p1Input, p2Input, p3Input, p4Input)
+    val playerInputs = listOf<TextField>(p1Input, p2Input, p3Input, p4Input)
 
     val startButton: Button = Button(
         width = 300, height = 100,

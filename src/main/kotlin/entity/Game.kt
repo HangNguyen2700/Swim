@@ -33,11 +33,17 @@ class Game {
         return currentPlayer
     }
 
+    fun setCurrentPlayer(player : Player){
+        this.currentPlayer = player
+    }
+
+    fun resetCurrentPlayer(){
+        this.currentPlayer = players.first()
+    }
+
     fun nextPlayer(): Player {
         var index = (players.indexOf(currentPlayer) + 1) % players.size
-        currentPlayer = players[index]
-//        onAllRefreshables { this.refreshAfterNextPlayer() }
-        return currentPlayer
+        return players[index]
     }
 
     fun getPassCounter(): Int {

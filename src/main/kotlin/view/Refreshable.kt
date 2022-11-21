@@ -1,12 +1,11 @@
 package view
 
+import entity.Player
+
 interface Refreshable {
     fun refreshAfterStartGame() {}
-    fun refreshAfterExchangeOneCard() {}
-    fun refreshAfterExchangeAllCards() {}
-    fun refreshAfterPass() {}
-    fun refreshAfterKnock(){}
-    fun refreshAfterEndGame(){}
+    fun refreshAfterPlayerAction() {}
+    fun refreshAfterEndGame(players : MutableList<Player>){}
     fun refreshAfterNextPlayer(){}
     fun refreshAfterUpdateScore(){}
 }

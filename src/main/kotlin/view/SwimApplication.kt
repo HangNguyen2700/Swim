@@ -1,5 +1,6 @@
 package view
 
+import entity.Player
 import service.RootService
 import tools.aqua.bgw.core.BoardGameApplication
 
@@ -9,25 +10,62 @@ class SwimApplication : BoardGameApplication("Swim"), Refreshable{
     // also holds the currently active game
     private val rootService = RootService()
 
-    private val gameScene = SwimNewGameScene()
+    private val gameScene = SwimGameScene(rootService)
 
-//    init {
-//
-//        // all scenes and the application itself need too
-//        // react to changes done in the service layer
-//        rootService.addRefreshables(
-//            this,
-//            gameScene,
-//            gameFinishedMenuScene,
-//            newGameMenuScene
-//        )
-//
-//        // This is just done so that the blurred background when showing
-//        // the new game menu has content and looks nicer
-//        rootService.gameService.startGame("Bob", "Alice")
-//
-//        this.showGameScene(gameScene)
-//        this.showMenuScene(newGameMenuScene, 0)
-//
-//    }
+    private val newGameScene = SwimNewGameScene().apply {
+        startButton.onMouseClicked = {
+            rootService.currentGame = null
+
+            var playerNames : MutableList<String> = mutableListOf()
+            playerNames.add(p1Input.text)
+            playerNames.add(p2Input.text)
+            playerNames.add(p3Input.text)
+            playerNames.add(p4Input.text)
+            playerNames.removeIf { playerName -> playerName.isBlank() }
+            rootService.gameService.startGame(playerNames)
+
+            checkNotNull(rootService.currentGame)
+        }
+
+        quitButton.onMouseClicked = {
+            exit()
+        }
+    }
+
+    init{
+        rootService.addRefreshables(
+            this,
+            newGameScene,
+            gameScene,
+        )
+        this.showGameScene(gameScene)
+        this.showMenuScene(newGameScene)
+    }
+
+    override fun refreshAfterStartGame() {
+        this.hideMenuScene()
+    }
+
+    override fun refreshAfterEndGame(players: MutableList<Player>) {
+        val gameOverScene = SwimGameOverScene(players)
+
+        gameOverScene.apply {
+            gameScene.resetGameScene()
+
+            restartButton.onMouseClicked = {
+                rootService.currentGame = null
+                var playerNames : MutableList<String> = mutableListOf()
+                players.forEachIndexed{index, _  -> playerNames.add(players[index].getName())}
+                rootService.gameService.startGame(playerNames)
+
+                checkNotNull(rootService.currentGame)
+            }
+            newGameButton.onMouseClicked = {
+                this@SwimApplication.showMenuScene(newGameScene)
+            }
+
+            this@SwimApplication.showMenuScene(gameOverScene)
+        }
+    }
+
 }

@@ -116,10 +116,11 @@ class ServiceTest {
     fun testNextPlayer(){
         val rootService = setUpGame()
         val playerService = PlayerService(rootService)
+        val gameService = GameService(rootService)
         val game = rootService.currentGame!!
 
         //Bob
-        game.nextPlayer()
+        gameService.nextPlayer()
         //Alice
 
         assertEquals("Alice",game.getCurrentPlayer().getName())
@@ -194,9 +195,9 @@ class ServiceTest {
         val game = rootService.currentGame!!
 
         playerService.pass()
-        game.nextPlayer()
+        gameService.nextPlayer()
         playerService.pass()
-        game.nextPlayer()
+        gameService.nextPlayer()
         playerService.pass()
 
         val end = gameService.endGame() // list of player

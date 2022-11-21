@@ -16,7 +16,6 @@ class Player {
 
     constructor(name: String, playerCards: MutableList<Card>) {
         if (name.isEmpty()) throw IllegalArgumentException("Player's name must be entered")
-//        if (playerCards.size != 3) throw IllegalArgumentException("Player must have exact 3 cards")
 
         this.name = name
         this.playerCards = playerCards
