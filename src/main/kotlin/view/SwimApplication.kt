@@ -44,6 +44,7 @@ class SwimApplication : BoardGameApplication("Swim"), Refreshable{
 
     override fun refreshAfterStartGame() {
         this.hideMenuScene()
+//        this.showGameScene(gameScene)
     }
 
     override fun refreshAfterEndGame(players: MutableList<Player>) {

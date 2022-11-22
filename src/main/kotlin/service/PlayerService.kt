@@ -4,7 +4,7 @@ import entity.Card
 
 /**
  * Player service class provides the logic for the 4 possible actions a player
- * can take in War
+ * can take in Swim
  *
  * @property rootService
  * @constructor Create empty Player service
@@ -12,7 +12,7 @@ import entity.Card
 class PlayerService(private var rootService: RootService) : AbstractRefreshingService() {
 
     private var gameService = rootService.gameService
-    private var currentGame = rootService.currentGame
+
 
     /**
      * Update score of current player and is called after current player's cards were updated
@@ -25,10 +25,11 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
      * @return calculated points of current player
      */
     private fun updateScore() : Double {
-        var currentPlayer = currentGame?.getCurrentPlayer()
-        var card0 = currentPlayer!!.getPlayerCards()[0]
-        var card1 = currentPlayer!!.getPlayerCards()[1]
-        var card2 = currentPlayer!!.getPlayerCards()[2]
+        var currentGame = rootService.currentGame
+        var currentPlayer = currentGame!!.getCurrentPlayer()
+        var card0 = currentPlayer.getPlayerCards()[0]
+        var card1 = currentPlayer.getPlayerCards()[1]
+        var card2 = currentPlayer.getPlayerCards()[2]
         var sum : Double = 0.0
 
         if(card0.equalsValue(card1) && card0.equalsValue(card2)){
@@ -65,12 +66,13 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
      * @param openCardIndex index of card in the middle stack, which will be exchanged
      */
     private fun exchangePlayerCard(playerCardIndex: Int, openCardIndex: Int) {
-        var currentPlayer = currentGame?.getCurrentPlayer()
-        var playerCard = currentPlayer!!.getPlayerCards()[playerCardIndex]
-        var openCard = currentGame!!.getOpenCards()[openCardIndex]
+        var currentGame = rootService.currentGame
+        var currentPlayer = currentGame!!.getCurrentPlayer()
+        var playerCard = currentPlayer.getPlayerCards()[playerCardIndex]
+        var openCard = currentGame.getOpenCards()[openCardIndex]
 
-        currentPlayer!!.getPlayerCards()[playerCardIndex] = openCard
-        currentGame!!.getOpenCards()[openCardIndex] = playerCard
+        currentPlayer.getPlayerCards()[playerCardIndex] = openCard
+        currentGame.getOpenCards()[openCardIndex] = playerCard
     }
 
     /**
@@ -80,13 +82,12 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
      * @param openCardIndex card in middle stack that is chosen to exchange
      */
     fun exchangeOneCard(playerCardIndex: Int, openCardIndex: Int) {
-        var currentPlayer = currentGame?.getCurrentPlayer()
-        checkNotNull(currentPlayer) { "No player currently playing." }
+        var currentGame = rootService.currentGame
+        var currentPlayer = currentGame!!.getCurrentPlayer()
         exchangePlayerCard(playerCardIndex, openCardIndex)
 
-        currentGame!!.resetPassCounter()
-        currentPlayer!!.setScore(updateScore())
-//        currentGame!!.nextPlayer()
+        currentGame.resetPassCounter()
+        currentPlayer.setScore(updateScore())
 
         onAllRefreshables { this.refreshAfterPlayerAction() }
     }
@@ -96,13 +97,13 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
      *
      */
     fun exchangeAllCards() {
+        var currentGame = rootService.currentGame
         var currentPlayer = currentGame!!.getCurrentPlayer()
 
         currentPlayer.getPlayerCards().forEachIndexed { index, _ -> exchangePlayerCard(index, index) }
 
         currentPlayer.setScore(updateScore())
         currentGame!!.resetPassCounter()
-//        currentGame!!.nextPlayer()
 
         onAllRefreshables { this.refreshAfterPlayerAction() }
     }
@@ -129,25 +130,23 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
      *
      */
     fun pass() {
-        var currentPlayer = currentGame?.getCurrentPlayer()
+        var currentGame = rootService.currentGame
+        var currentPlayer = currentGame!!.getCurrentPlayer()
 
-        checkNotNull(currentPlayer) { "No player currently playing." }
-
-        if (currentGame!!.getPassCounter() == currentGame!!.getPlayers().size) {
-            if (currentGame!!.getUnusedCards().size < 3) {
+        if (currentGame.getPassCounter() == currentGame.getPlayers().size) {
+            if (currentGame.getUnusedCards().size < 3) {
                 gameService.endGame()
                 return
             }
-            replaceOpenCardsWithUnusedCards(currentGame!!.getOpenCards(), currentGame!!.getUnusedCards())
-            currentGame!!.resetPassCounter()
+            replaceOpenCardsWithUnusedCards(currentGame.getOpenCards(), currentGame.getUnusedCards())
+            currentGame.resetPassCounter()
         }
 
         else {
-            currentGame!!.increasePassCounter()
+            currentGame.increasePassCounter()
         }
 
-        currentPlayer!!.setScore(updateScore())
-//        currentGame!!.nextPlayer()
+        currentPlayer.setScore(updateScore())
 
         onAllRefreshables { this.refreshAfterPlayerAction() }
     }
@@ -158,16 +157,16 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
      *
      */
     fun knock() {
-        var currentPlayer = currentGame?.getCurrentPlayer()
+        var currentGame = rootService.currentGame
+        var currentPlayer = currentGame!!.getCurrentPlayer()
 
-        checkNotNull(currentPlayer) { "No player currently playing." }
-        if (currentPlayer!!.getHasKnocked()) {
+        if (currentPlayer.getHasKnocked()) {
             gameService.endGame()
             return
         }
-        currentPlayer!!.setHasKnocked()
-        currentGame!!.resetPassCounter()
-//        currentGame!!.nextPlayer()
+        currentPlayer.setHasKnocked()
+        currentGame.resetPassCounter()
+        currentPlayer.setScore(updateScore())
 
         onAllRefreshables { this.refreshAfterPlayerAction() }
     }

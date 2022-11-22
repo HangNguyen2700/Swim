@@ -13,13 +13,18 @@ import tools.aqua.bgw.core.BoardGameScene
 import tools.aqua.bgw.util.Font
 import tools.aqua.bgw.visual.ColorVisual
 import tools.aqua.bgw.visual.ImageVisual
+import tools.aqua.bgw.visual.Visual
 import java.awt.Color
 
 class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Refreshable {
-    private val mainGrid = GridPane<GridPane<ComponentView>>(950, 520, columns = 3, rows = 3)
-    private val unusedCardsGrid = GridPane<ComponentView>(columns = 1, rows = 2)
-    private val openCardsGrid = GridPane<ComponentView>(columns = 3, rows = 2)
+    private val mainGrid = GridPane<GridPane<ComponentView>>(950, 520, columns = 3, rows = 4)
+
+    private val openCardsGrid = GridPane<ComponentView>(columns = 3, rows = 1)
     private val playerCardsGrid = GridPane<ComponentView>(columns = 3, rows = 2)
+    private val otherPlayerCardsGrid1 = GridPane<ComponentView>(columns = 3, rows = 1)
+    private val otherPlayerCardsGrid2 = GridPane<ComponentView>(columns = 3, rows = 1)
+    private val otherPlayerCardsGrid3 = GridPane<ComponentView>(columns = 3, rows = 1)
+
     private val swimGrid = GridPane<ComponentView>(columns = 1, rows = 2)
     private val leftButtonsGrid = GridPane<ComponentView>(columns = 1, rows = 2)
     private val rightButtonsGrid = GridPane<ComponentView>(columns = 1, rows = 4)
@@ -45,34 +50,31 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         font = labelFont,
     )
 
-    private val unusedCards = LabeledStackView(label = "unused cards")
 
-    private val openCardsLabel = Label(
-        text = "open cards",
-        font = labelFont
-    )
+    //    private val openCardsLabel = Label(
+//        text = "open cards",
+//        font = labelFont
+//    )
     private val currentPlayerLabel = Label(
-//        text = rootService.currentGame!!.getCurrentPlayer().getName(),
-        text = "Current: ...",
         font = labelFont
     )
 
     private val openCard1 = LabeledStackView(label = "open card 1").apply {
         onMouseClicked = {
             openCardIndex = 0
-            onSelectedCards(0, 1, "open")
+            onSelectedCards(0, 0, "open")
         }
     }
     private val openCard2 = LabeledStackView(label = "open card 2").apply {
         onMouseClicked = {
             openCardIndex = 1
-            onSelectedCards(1, 1, "open")
+            onSelectedCards(1, 0, "open")
         }
     }
     private val openCard3 = LabeledStackView(label = "open card 3").apply {
         onMouseClicked = {
             openCardIndex = 2
-            onSelectedCards(2, 1, "open")
+            onSelectedCards(2, 0, "open")
         }
     }
     private val openCardsLabeledStackView = listOf(openCard1, openCard2, openCard3)
@@ -97,10 +99,23 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
     }
     private val playerCardsLabeledStackView = listOf(playerCard1, playerCard2, playerCard3)
 
+    private val otherPlayerCard1 = LabeledStackView(label = "other player's card1")
+    private val otherPlayerCard2 = LabeledStackView(label = "other player's card2")
+    private val otherPlayerCard3 = LabeledStackView(label = "other player's card3")
+    private val otherPlayerCard4 = LabeledStackView(label = "other player's card4")
+    private val otherPlayerCard5 = LabeledStackView(label = "other player's card5")
+    private val otherPlayerCard6 = LabeledStackView(label = "other player's card6")
+    private val otherPlayerCard7 = LabeledStackView(label = "other player's card7")
+    private val otherPlayerCard8 = LabeledStackView(label = "other player's card8")
+    private val otherPlayerCard9 = LabeledStackView(label = "other player's card9")
+
+    private val otherplayerCardsLabeledStackView = listOf(otherPlayerCard1, otherPlayerCard2, otherPlayerCard3,
+        otherPlayerCard4, otherPlayerCard5, otherPlayerCard6, otherPlayerCard7, otherPlayerCard8, otherPlayerCard9)
+
 
     private fun onSelectedCards(column: Int, row: Int, cardType: String) {
-        if (cardType == "Open Card") {
-            openCardsGrid.setRowCenterMode(1, Alignment.CENTER)
+        if (cardType == "open") {
+            openCardsGrid.setRowCenterMode(0, Alignment.CENTER)
             openCardsGrid.setCellCenterMode(column, row, Alignment.TOP_CENTER)
         } else {
             playerCardsGrid.setRowCenterMode(0, Alignment.CENTER)
@@ -117,10 +132,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         visual = ColorVisual(70, 130, 180)
         onMouseClicked = {
             playerCardsLabeledStackView.forEach { cardView ->
-                when (cardView.peek().currentSide) {
-                    CardView.CardSide.BACK -> cardView.peek().showFront()
-                    CardView.CardSide.FRONT -> cardView.peek().showBack()
-                }
+                cardView.peek().flip()
             }
         }
     }
@@ -144,10 +156,6 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
     ).apply {
         visual = ColorVisual(70, 130, 180)
         onMouseClicked = {
-//            var playerCards = rootService.currentGame!!.getCurrentPlayer().getPlayerCards()
-//            var openCards = rootService.currentGame!!.getOpenCards()
-//            checkNotNull(playerCards){"game was not initialized"}
-//            checkNotNull(openCards){"game was not initialized"}
 
             rootService.playerService.exchangeOneCard(playerCardIndex, openCardIndex)
 
@@ -260,6 +268,23 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         }
     }
 
+    private fun showOtherCardBack(
+        cardImageLoader: CardImageLoader,
+        stackView: List<LabeledStackView>
+    ) {
+        for (i in 0..8) {
+            val cardView = CardView(
+                height = 200,
+                width = 130,
+                front = Visual.EMPTY,
+                back = ImageVisual(cardImageLoader.backImage)
+            )
+            cardView.showBack()
+            stackView[i].clear()
+            stackView[i].add(cardView)
+        }
+    }
+
 
     override fun refreshAfterStartGame() {
         val game = rootService.currentGame
@@ -270,6 +295,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
 
         showCardBack(playerCards, cardImageLoader, playerCardsLabeledStackView)
         showCardFront(openCards, cardImageLoader, openCardsLabeledStackView)
+        showOtherCardBack(cardImageLoader, otherplayerCardsLabeledStackView)
 
         currentPlayerLabel.text = game.getCurrentPlayer().getName()
         //nextPlayerName.text = game.players[1].name
@@ -301,11 +327,11 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
 
         currentPlayerLabel.text = rootService.currentGame!!.getCurrentPlayer().getName()
 
-        openCardsGrid.setRowCenterMode(1,Alignment.CENTER)
-        playerCardsGrid.setRowCenterMode(0,Alignment.CENTER)
+        openCardsGrid.setRowCenterMode(0, Alignment.CENTER)
+        playerCardsGrid.setRowCenterMode(0, Alignment.CENTER)
 
         passButton.isDisabled = false
-        knockButton.isDisabled = !knocked
+        knockButton.isDisabled = knocked
         exchangeOneCardButton.isDisabled = false
         exchangeAllCardsButton.isDisabled = false
         nextPlayerButton.isDisabled = true
@@ -325,38 +351,55 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
     init {
         swimGrid[0, 0] = swimLabel
         swimGrid[0, 1] = knockedLabel
-        mainGrid[1, 1] = swimGrid
+        mainGrid[1, 0] = swimGrid
+        mainGrid.setRowHeight(0,300)
 
-        unusedCardsGrid[0, 0] = unusedCards
-        mainGrid[0, 0] = unusedCardsGrid
 
         for (i in 0..2) {
-            openCardsGrid[i, 1] = openCardsLabeledStackView[i]
-            playerCardsGrid[i, 0] = playerCardsLabeledStackView[i]
-            openCardsGrid.setColumnWidth(i, 200)
-            playerCardsGrid.setColumnWidth(i, 200)
+            otherPlayerCardsGrid1[i, 0] = otherplayerCardsLabeledStackView[i]
+            otherPlayerCardsGrid1.setColumnWidth(i, 150)
         }
-        openCardsGrid.setRowHeight(1, 300)
-        playerCardsGrid.setRowHeight(0, 300)
+        for (i in 0..2) {
+            otherPlayerCardsGrid2[i, 0] = otherplayerCardsLabeledStackView[i+3]
+            otherPlayerCardsGrid2.setColumnWidth(i, 150)
+        }
+        for (i in 0..2) {
+            otherPlayerCardsGrid3[i, 0] = otherplayerCardsLabeledStackView[i+6]
+            otherPlayerCardsGrid3.setColumnWidth(i, 150)
+        }
 
-        openCardsGrid[1, 0] = openCardsLabel
+        mainGrid[0, 2] = otherPlayerCardsGrid1
+        mainGrid[1, 1] = otherPlayerCardsGrid2
+        mainGrid[2, 2] = otherPlayerCardsGrid3
+
+
+        for (i in 0..2) {
+            openCardsGrid[i, 0] = openCardsLabeledStackView[i]
+            playerCardsGrid[i, 0] = playerCardsLabeledStackView[i]
+            openCardsGrid.setColumnWidth(i, 150)
+            playerCardsGrid.setColumnWidth(i, 150)
+        }
+        openCardsGrid.setRowHeight(0, 270)
+        playerCardsGrid.setRowHeight(0, 270)
+
+//        openCardsGrid[1, 0] = openCardsLabel
         playerCardsGrid[1, 1] = currentPlayerLabel
-        mainGrid[1, 0] = openCardsGrid
-        mainGrid[1, 2] = playerCardsGrid
+        mainGrid[1, 2] = openCardsGrid
+        mainGrid[1, 3] = playerCardsGrid
 
         leftButtonsGrid[0, 0] = flipCardButton
         leftButtonsGrid[0, 1] = nextPlayerButton
         leftButtonsGrid.setRowHeight(1, 100)
-        mainGrid[0, 2] = leftButtonsGrid
+        mainGrid[0, 3] = leftButtonsGrid
 
-        rightButtonsGrid[0,0] = exchangeOneCardButton
-        rightButtonsGrid[0,1] = exchangeAllCardsButton
-        rightButtonsGrid[0,2] = passButton
-        rightButtonsGrid[0,3] = knockButton
+        rightButtonsGrid[0, 0] = exchangeOneCardButton
+        rightButtonsGrid[0, 1] = exchangeAllCardsButton
+        rightButtonsGrid[0, 2] = passButton
+        rightButtonsGrid[0, 3] = knockButton
         for(i in 0..3){
             rightButtonsGrid.setRowHeight(i, 80)
         }
-        mainGrid[2,2] = rightButtonsGrid
+        mainGrid[2, 3] = rightButtonsGrid
 
         background = ColorVisual(224, 255, 255)
         addComponents(mainGrid)

@@ -43,6 +43,20 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
         onAllRefreshables { this.refreshAfterStartGame() }
     }
 
+    fun playersSize() : Int {
+        val game = rootService.currentGame
+        if(game?.equals(null) == false){
+            return game.getPlayers().size
+        }
+        return 0
+    }
+
+    fun currentPlayer() : Player{
+        val game = rootService.currentGame
+        checkNotNull(game) { "No game is currently running." }
+        return game.getCurrentPlayer()
+    }
+
     fun nextPlayer(){
         val game = rootService.currentGame
         checkNotNull(game) { "No game is currently running." }
