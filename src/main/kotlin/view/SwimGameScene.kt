@@ -294,6 +294,13 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         showCardFront(openCards, cardImageLoader, openCardsLabeledStackView)
         showOtherCardBack(cardImageLoader, otherplayerCardsLabeledStackView)
 
+        if(game.getPlayers().size == 3){
+            otherPlayerCardsGrid2.isVisible = false
+        } else if(game.getPlayers().size == 2){
+            otherPlayerCardsGrid1.isVisible = false
+            otherPlayerCardsGrid3.isVisible = false
+        }
+
         currentPlayerLabel.text = game.getCurrentPlayer().getName()
         //nextPlayerName.text = game.players[1].name
 
