@@ -15,18 +15,41 @@ data class Card (val suit: CardSuit, val value: CardValue) {
      */
     operator fun compareTo(other: Card) = this.value.ordinal - other.value.ordinal
 
+    /**
+     * compares if 2 cards are the same
+     *
+     * @param other second card to compare
+     * @return true if 2 cards are the same, false if not
+     */
     fun equals(other: Card): Boolean {
         return this.value.ordinal == other.value.ordinal && this.suit.ordinal == other.suit.ordinal
     }
 
+    /**
+     * compares if values of 2 cards are the same
+     *
+     * @param other second card to compare
+     * @return true if values of 2 cards are the same, false if not
+     */
     fun equalsValue(other: Card): Boolean {
         return this.value.ordinal == other.value.ordinal
     }
 
+    /**
+     * compares if suits of 2 cards are the same
+     *
+     * @param other second card to compare
+     * @return true if suits of 2 cards are the same, false if not
+     */
     fun equalsSuit(other: Card): Boolean {
         return this.suit.ordinal == other.suit.ordinal
     }
 
+    /**
+     * generates card value to score
+     *
+     * @return generated score
+     */
     fun toDoubleValue() : Double {
         var doubleValue = when(value.toString()){
             "2" -> 2.0

@@ -11,6 +11,13 @@ import tools.aqua.bgw.util.Font
 import tools.aqua.bgw.visual.ColorVisual
 import java.awt.Color
 
+/**
+ * [MenuScene] that is used for starting a new game. It is displayed directly at program start or reached
+ * when "new game" is clicked in [GameFinishedMenuScene]. After providing the names of both players,
+ * [startButton] can be pressed. There is also a [quitButton] to end the program.
+ *
+ * @constructor Create empty Swim new game scene
+ */
 class SwimNewGameScene : MenuScene(), Refreshable {
     private val mainGrid: GridPane<GridPane<UIComponent>> = GridPane( 950, 520, columns = 1, rows = 3)
     private val newGameGrid = GridPane<UIComponent>(columns = 1, rows = 1)

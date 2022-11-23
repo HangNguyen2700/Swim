@@ -42,14 +42,6 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
         onAllRefreshables { this.refreshAfterStartGame() }
     }
 
-    fun playersSize(): Int {
-        val game = rootService.currentGame
-        if (game?.equals(null) == false) {
-            return game.getPlayers().size
-        }
-        return 0
-    }
-
 
     /**
      * Check if current player has already knocked, then check if all players have passed
@@ -65,15 +57,6 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
 
         if (game.nextPlayer().getHasKnocked()) {
             endGame()
-
-//        } else if (game.getPassCounter() == game.getPlayers().size) {
-//            if (game.getUnusedCards().size < 3) {
-//                game.resetPassCounter()
-//                endGame()
-//                return
-//            }
-//            replaceOpenCardsWithUnusedCards(game.getOpenCards(), game.getUnusedCards())
-//            game.resetPassCounter()
         } else {
             game.setCurrentPlayer(game.nextPlayer())
         }

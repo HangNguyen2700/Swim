@@ -16,6 +16,14 @@ import tools.aqua.bgw.visual.ImageVisual
 import tools.aqua.bgw.visual.Visual
 import java.awt.Color
 
+/**
+ * This is the main thing for the Swim game. The scene shows the complete table at once.
+ * Current player "sits" is always on the bottom half of the screen with 3 cards and 2 buttons on the left side to
+ * control players view, 4 button on the right side to play cards
+ *
+ * @property rootService
+ * @constructor Create empty Swim game scene
+ */
 class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Refreshable {
     private val mainGrid = GridPane<GridPane<ComponentView>>(950, 520, columns = 3, rows = 4)
 
@@ -282,7 +290,9 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         }
     }
 
-
+    /**
+     * Initializes the complete GUI
+     */
     override fun refreshAfterStartGame() {
         val game = rootService.currentGame
         val openCards = game!!.getOpenCards()
@@ -302,7 +312,6 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         }
 
         currentPlayerLabel.text = game.getCurrentPlayer().getName()
-        //nextPlayerName.text = game.players[1].name
 
         passButton.isDisabled = false
         knockButton.isDisabled = knocked
@@ -346,7 +355,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
     }
 
     /**
-     * TODO reset knockedPlayer and knockButton to original setup
+     * Reset game scene, is called in [SwimApplication] by clicking on restart button or new game button
      *
      */
     fun resetGameScene() {

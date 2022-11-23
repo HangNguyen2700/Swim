@@ -10,6 +10,13 @@ import tools.aqua.bgw.util.Font
 import tools.aqua.bgw.visual.ColorVisual
 import java.awt.Color
 
+/**
+ * [MenuScene] that is displayed when the game is finished. It shows the final result of the game
+ * as well as the score. Also, there are two buttons: one for starting a new game and one for
+ * restart the game with the same players.
+ *
+ * @constructor Create empty Swim game over scene
+ */
 class SwimGameOverScene(val players: MutableList<Player>) : MenuScene(), Refreshable {
     private val mainGrid: GridPane<GridPane<UIComponent>> = GridPane(950, 520, columns = 1, rows = 4)
     private val endGameGrid = GridPane<UIComponent>(columns = 1, rows = 1)

@@ -4,14 +4,22 @@ import entity.Player
 import service.RootService
 import tools.aqua.bgw.core.BoardGameApplication
 
+/**
+ * Implementation of the BGW [BoardGameApplication] for the card game Swim
+ */
 class SwimApplication : BoardGameApplication("Swim"), Refreshable{
 
     // Central service from which all others are created/accessed
     // also holds the currently active game
     private val rootService = RootService()
 
+    // Scenes
+
+    // This is where the actual game takes place
     private val gameScene = SwimGameScene(rootService)
 
+    // This menu scene is shown after application start and if the "new game" button
+    // is clicked in the gameFinishedMenuScene
     private val newGameScene = SwimNewGameScene().apply {
         startButton.onMouseClicked = {
             rootService.currentGame = null
@@ -47,6 +55,7 @@ class SwimApplication : BoardGameApplication("Swim"), Refreshable{
     }
 
     override fun refreshAfterEndGame(players: MutableList<Player>) {
+        // This menu scene is shown after each finished game
         val gameOverScene = SwimGameOverScene(players)
 
         gameOverScene.apply {
