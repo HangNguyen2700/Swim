@@ -45,7 +45,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
     )
     private val knockedLabel = Label(
         text = "No one has knocked",
-        height = 100,
+        height = 50,
         width = 1000,
         font = labelFont,
     )
@@ -300,6 +300,10 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         currentPlayerLabel.text = game.getCurrentPlayer().getName()
         //nextPlayerName.text = game.players[1].name
 
+        passButton.isDisabled = false
+        knockButton.isDisabled = knocked
+        exchangeOneCardButton.isDisabled = false
+        exchangeAllCardsButton.isDisabled = false
         nextPlayerButton.isDisabled = true
     }
 
@@ -352,7 +356,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         swimGrid[0, 0] = swimLabel
         swimGrid[0, 1] = knockedLabel
         mainGrid[1, 0] = swimGrid
-        mainGrid.setRowHeight(0,300)
+        mainGrid.setRowHeight(0,200)
 
 
         for (i in 0..2) {
@@ -371,6 +375,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         mainGrid[0, 2] = otherPlayerCardsGrid1
         mainGrid[1, 1] = otherPlayerCardsGrid2
         mainGrid[2, 2] = otherPlayerCardsGrid3
+        mainGrid.setRowHeight(1, 250)
 
 
         for (i in 0..2) {
@@ -382,7 +387,6 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         openCardsGrid.setRowHeight(0, 270)
         playerCardsGrid.setRowHeight(0, 270)
 
-//        openCardsGrid[1, 0] = openCardsLabel
         playerCardsGrid[1, 1] = currentPlayerLabel
         mainGrid[1, 2] = openCardsGrid
         mainGrid[1, 3] = playerCardsGrid

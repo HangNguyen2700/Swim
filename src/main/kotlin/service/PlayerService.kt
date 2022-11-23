@@ -110,7 +110,7 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
 
     /**
      * Check if it has more than 2 cards in new stack and replace 3 cards in middle stack with 3 cards in new stack.
-     * Is used in [pass]
+     * Is used in [nextPlayer]
      *
      * @param openCards cards in middle stack that are no longer used
      * @param unusedCards cards in new stack that will be put in middle stack and will be removed from new stack
@@ -122,31 +122,25 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
     }
 
     /**
-     * Check if current player is valid, then check if all players already passed
-     * If all players passed and number of cards in new stack is fewer than 3, end game
-     * If all players passed and number of cards in new stack is not fewer than 3, call [replaceOpenCardsWithUnusedCards]
-     * and reset passCounter to 0
-     * Otherwise current player just pass and increases passCounter by 1
+     * current player just passes and increases passCounter by 1
      *
      */
     fun pass() {
         var currentGame = rootService.currentGame
         var currentPlayer = currentGame!!.getCurrentPlayer()
 
+        currentGame.increasePassCounter()
+        currentPlayer.setScore(updateScore())
+
         if (currentGame.getPassCounter() == currentGame.getPlayers().size) {
             if (currentGame.getUnusedCards().size < 3) {
+                currentGame.resetPassCounter()
                 gameService.endGame()
                 return
             }
             replaceOpenCardsWithUnusedCards(currentGame.getOpenCards(), currentGame.getUnusedCards())
             currentGame.resetPassCounter()
         }
-
-        else {
-            currentGame.increasePassCounter()
-        }
-
-        currentPlayer.setScore(updateScore())
 
         onAllRefreshables { this.refreshAfterPlayerAction() }
     }

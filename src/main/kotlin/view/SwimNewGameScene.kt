@@ -101,7 +101,7 @@ class SwimNewGameScene : MenuScene(), Refreshable {
 
     val quitButton: Button = Button(
         width = 300, height = 100,
-        text = "Quit Game",
+        text = "Quit",
         font = buttonTextFont
     ).apply {
         visual = ColorVisual(70, 130, 180)

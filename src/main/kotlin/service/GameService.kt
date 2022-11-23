@@ -1,7 +1,6 @@
 package service
 
 import entity.*
-import javax.swing.plaf.multi.MultiTabbedPaneUI
 
 /**
  * Game service
@@ -43,28 +42,42 @@ class GameService(private val rootService: RootService) : AbstractRefreshingServ
         onAllRefreshables { this.refreshAfterStartGame() }
     }
 
-    fun playersSize() : Int {
+    fun playersSize(): Int {
         val game = rootService.currentGame
-        if(game?.equals(null) == false){
+        if (game?.equals(null) == false) {
             return game.getPlayers().size
         }
         return 0
     }
 
-    fun currentPlayer() : Player{
-        val game = rootService.currentGame
-        checkNotNull(game) { "No game is currently running." }
-        return game.getCurrentPlayer()
-    }
 
-    fun nextPlayer(){
+    /**
+     * Check if current player has already knocked, then check if all players have passed
+     * If all players passed and number of cards in new stack is fewer than 3, end game
+     * If all players passed and number of cards in new stack is not fewer than 3, call [replaceOpenCardsWithUnusedCards]
+     * and reset passCounter to 0
+     * Otherwise call next player
+     *
+     */
+    fun nextPlayer() {
         val game = rootService.currentGame
         checkNotNull(game) { "No game is currently running." }
-        if(game.nextPlayer().getHasKnocked()){
+
+        if (game.nextPlayer().getHasKnocked()) {
             endGame()
+
+//        } else if (game.getPassCounter() == game.getPlayers().size) {
+//            if (game.getUnusedCards().size < 3) {
+//                game.resetPassCounter()
+//                endGame()
+//                return
+//            }
+//            replaceOpenCardsWithUnusedCards(game.getOpenCards(), game.getUnusedCards())
+//            game.resetPassCounter()
         } else {
             game.setCurrentPlayer(game.nextPlayer())
         }
+
         onAllRefreshables { this.refreshAfterNextPlayer() }
     }
 
