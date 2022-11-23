@@ -8,6 +8,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
+/**
+ * Service test
+ *
+ * @constructor Create empty Service test
+ */
 class ServiceTest {
 
     private fun setUpGame(/*vararg refreshables: Refreshable*/): RootService {
@@ -70,6 +75,10 @@ class ServiceTest {
         return rootService
     }
 
+    /**
+     * Test start game
+     *
+     */
     @Test
     fun testStartGame() {
         val game = setUpGame().currentGame!!
@@ -85,6 +94,10 @@ class ServiceTest {
     }
 
 
+    /**
+     * Test exchange one card
+     *
+     */
     @Test
     fun testExchangeOneCard() {
         val rootService = setUpGame()
@@ -99,6 +112,10 @@ class ServiceTest {
         assertEquals(Card(CardSuit.DIAMONDS, CardValue.SEVEN), game.getOpenCards()[1])
     }
 
+    /**
+     * Test exchange all cards
+     *
+     */
     @Test
     fun testExchangeAllCards() {
         val rootService = setUpGame()
@@ -112,6 +129,10 @@ class ServiceTest {
         assertEquals(Card(CardSuit.DIAMONDS, CardValue.SEVEN), game.getOpenCards()[2])
     }
 
+    /**
+     * Test next player
+     *
+     */
     @Test
     fun testNextPlayer(){
         val rootService = setUpGame()
@@ -126,6 +147,10 @@ class ServiceTest {
         assertEquals("Alice",game.getCurrentPlayer().getName())
     }
 
+    /**
+     * Test pass
+     *
+     */
     @Test
     fun testPass() {
         val rootService = setUpGame()
@@ -175,6 +200,10 @@ class ServiceTest {
         //test pass -> endgame
     }
 
+    /**
+     * Test knock
+     *
+     */
     @Test
     fun testKnock(){
         val rootService = setUpGame()
@@ -186,6 +215,10 @@ class ServiceTest {
 
     }
 
+    /**
+     * Test end game
+     *
+     */
     @Test
     fun testEndGame(){
         val rootService = setUpGame()
