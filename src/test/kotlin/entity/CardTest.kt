@@ -2,6 +2,11 @@ package entity
 
 import kotlin.test.*
 
+/**
+ * Card test
+ *
+ * @constructor Create empty Card test
+ */
 class CardTest {
     // Some cards to perform the tests with
     private val aceOfSpades = Card(CardSuit.SPADES, CardValue.ACE)

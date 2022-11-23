@@ -7,7 +7,6 @@ import kotlin.test.*
  *
  * @constructor Create empty Game test
  */
-
 class GameTest {
     private val playerCards1 = mutableListOf<Card>(
         Card(CardSuit.CLUBS, CardValue.QUEEN),
