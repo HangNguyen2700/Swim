@@ -3,6 +3,12 @@ package service
 import view.Refreshable
 //import javax.security.auth.Refreshable
 
+/**
+ * Abstract service class that handles multiples [Refreshable]s (usually UI elements, such as
+ * specialized [tools.aqua.bgw.core.BoardGameScene] classes/instances) which are notified
+ * of changes to refresh via the [onAllRefreshables] method.
+ *
+ */
 abstract class AbstractRefreshingService {
     private val refreshables = mutableListOf<Refreshable>()
 

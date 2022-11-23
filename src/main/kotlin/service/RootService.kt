@@ -4,6 +4,11 @@ import entity.Game
 import entity.Player
 import view.Refreshable
 
+/**
+ * Main class of the service layer for the Swim card game. Provides access
+ * to all other service classes and holds the [currentGame] state for these
+ * services to access.
+ */
 class RootService {
     val gameService = GameService(this)
     val playerService = PlayerService(this)
