@@ -103,7 +103,7 @@ class PlayerService(private var rootService: RootService) : AbstractRefreshingSe
         currentPlayer.getPlayerCards().forEachIndexed { index, _ -> exchangePlayerCard(index, index) }
 
         currentPlayer.setScore(updateScore())
-        currentGame!!.resetPassCounter()
+        currentGame.resetPassCounter()
 
         onAllRefreshables { this.refreshAfterPlayerAction() }
     }
