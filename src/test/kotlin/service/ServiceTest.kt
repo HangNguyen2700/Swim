@@ -135,8 +135,7 @@ class ServiceTest {
         playerService.pass()
         assertEquals(1, game.getPassCounter())
 
-        game.increasePassCounter()
-        game.increasePassCounter()
+        playerService.pass()
         playerService.pass()
         assertEquals(0, game.getPassCounter())
         assertEquals(

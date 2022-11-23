@@ -51,10 +51,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
     )
 
 
-    //    private val openCardsLabel = Label(
-//        text = "open cards",
-//        font = labelFont
-//    )
+
     private val currentPlayerLabel = Label(
         font = labelFont
     )

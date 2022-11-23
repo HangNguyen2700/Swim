@@ -36,7 +36,7 @@ class SwimApplication : BoardGameApplication("Swim"), Refreshable{
         rootService.addRefreshables(
             this,
             newGameScene,
-            gameScene,
+            gameScene
         )
         this.showGameScene(gameScene)
         this.showMenuScene(newGameScene)
@@ -44,7 +44,6 @@ class SwimApplication : BoardGameApplication("Swim"), Refreshable{
 
     override fun refreshAfterStartGame() {
         this.hideMenuScene()
-//        this.showGameScene(gameScene)
     }
 
     override fun refreshAfterEndGame(players: MutableList<Player>) {
