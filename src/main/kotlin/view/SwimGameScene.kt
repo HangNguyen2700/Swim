@@ -117,7 +117,6 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
     private val otherplayerCardsLabeledStackView = listOf(otherPlayerCard1, otherPlayerCard2, otherPlayerCard3,
         otherPlayerCard4, otherPlayerCard5, otherPlayerCard6, otherPlayerCard7, otherPlayerCard8, otherPlayerCard9)
 
-
     private fun onSelectedCards(column: Int, row: Int, cardType: String) {
         if (cardType == "open") {
             openCardsGrid.setRowCenterMode(0, Alignment.CENTER)
@@ -129,7 +128,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
     }
 
 
-    val flipCardButton: Button = Button(
+    private val flipCardButton: Button = Button(
         width = 200, height = 70,
         text = "Flip Card",
         font = buttonTextFont
@@ -142,7 +141,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         }
     }
 
-    val nextPlayerButton: Button = Button(
+    private val nextPlayerButton: Button = Button(
         width = 200, height = 70,
         text = "Next Player",
         font = buttonTextFont
@@ -154,7 +153,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         }
     }
 
-    val exchangeOneCardButton: Button = Button(
+    private val exchangeOneCardButton: Button = Button(
         width = 200, height = 70,
         text = "Exchange One Card",
         font = buttonTextFont
@@ -172,7 +171,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         }
     }
 
-    val exchangeAllCardsButton: Button = Button(
+    private val exchangeAllCardsButton: Button = Button(
         width = 200, height = 70,
         text = "Exchange All Cards",
         font = buttonTextFont
@@ -189,7 +188,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         }
     }
 
-    val passButton: Button = Button(
+    private val passButton: Button = Button(
         width = 200, height = 70,
         text = "Pass",
         font = buttonTextFont
@@ -206,7 +205,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         }
     }
 
-    val knockButton: Button = Button(
+    private val knockButton: Button = Button(
         width = 200, height = 70,
         text = "Knock",
         font = buttonTextFont

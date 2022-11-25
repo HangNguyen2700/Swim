@@ -96,7 +96,7 @@ class SwimNewGameScene : MenuScene(), Refreshable {
         }
     }
 
-    val playerInputs = listOf<TextField>(p1Input, p2Input, p3Input, p4Input)
+    val playerInputs = listOf(p1Input, p2Input, p3Input, p4Input)
 
     val startButton: Button = Button(
         width = 300, height = 100,
