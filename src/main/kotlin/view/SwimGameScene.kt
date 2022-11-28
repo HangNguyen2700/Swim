@@ -123,7 +123,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
             playerCardsGrid.setRowCenterMode(0, Alignment.CENTER)
             playerCardsGrid.setCellCenterMode(column, row, Alignment.TOP_CENTER)
         }
-        exchangeOneCardButton.isDisabled=false
+        exchangeOneCardButton.isDisabled = (openCardIndex==4 || playerCardIndex==4)
     }
 
 
