@@ -333,8 +333,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
 
     override fun refreshAfterNextPlayer() {
         val game = rootService.currentGame
-        val openCards = game!!.getOpenCards()
-        val playerCards = game.getCurrentPlayer().getPlayerCards()
+        val playerCards = game!!.getCurrentPlayer().getPlayerCards()
 
         val cardImageLoader = CardImageLoader()
 
