@@ -58,8 +58,6 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
         font = labelFont,
     )
 
-
-
     private val currentPlayerLabel = Label(
         font = labelFont
     )
@@ -114,7 +112,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
     private val otherPlayerCard8 = LabeledStackView(label = "other player's card8")
     private val otherPlayerCard9 = LabeledStackView(label = "other player's card9")
 
-    private val otherplayerCardsLabeledStackView = listOf(otherPlayerCard1, otherPlayerCard2, otherPlayerCard3,
+    private val otherPlayerCardsLabeledStackView = listOf(otherPlayerCard1, otherPlayerCard2, otherPlayerCard3,
         otherPlayerCard4, otherPlayerCard5, otherPlayerCard6, otherPlayerCard7, otherPlayerCard8, otherPlayerCard9)
 
     private fun onSelectedCards(column: Int, row: Int, cardType: String) {
@@ -125,6 +123,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
             playerCardsGrid.setRowCenterMode(0, Alignment.CENTER)
             playerCardsGrid.setCellCenterMode(column, row, Alignment.TOP_CENTER)
         }
+        exchangeOneCardButton.isDisabled=false
     }
 
 
@@ -301,7 +300,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
 
         showCardBack(playerCards, cardImageLoader, playerCardsLabeledStackView)
         showCardFront(openCards, cardImageLoader, openCardsLabeledStackView)
-        showOtherCardBack(cardImageLoader, otherplayerCardsLabeledStackView)
+        showOtherCardBack(cardImageLoader, otherPlayerCardsLabeledStackView)
 
         if(game.getPlayers().size == 3){
             otherPlayerCardsGrid2.isVisible = false
@@ -314,7 +313,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
 
         passButton.isDisabled = false
         knockButton.isDisabled = knocked
-        exchangeOneCardButton.isDisabled = false
+        exchangeOneCardButton.isDisabled = true
         exchangeAllCardsButton.isDisabled = false
         nextPlayerButton.isDisabled = true
     }
@@ -348,7 +347,7 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
 
         passButton.isDisabled = false
         knockButton.isDisabled = knocked
-        exchangeOneCardButton.isDisabled = false
+        exchangeOneCardButton.isDisabled = true
         exchangeAllCardsButton.isDisabled = false
         nextPlayerButton.isDisabled = true
     }
@@ -372,15 +371,15 @@ class SwimGameScene(private val rootService: RootService) : BoardGameScene(), Re
 
 
         for (i in 0..2) {
-            otherPlayerCardsGrid1[i, 0] = otherplayerCardsLabeledStackView[i]
+            otherPlayerCardsGrid1[i, 0] = otherPlayerCardsLabeledStackView[i]
             otherPlayerCardsGrid1.setColumnWidth(i, 150)
         }
         for (i in 0..2) {
-            otherPlayerCardsGrid2[i, 0] = otherplayerCardsLabeledStackView[i+3]
+            otherPlayerCardsGrid2[i, 0] = otherPlayerCardsLabeledStackView[i+3]
             otherPlayerCardsGrid2.setColumnWidth(i, 150)
         }
         for (i in 0..2) {
-            otherPlayerCardsGrid3[i, 0] = otherplayerCardsLabeledStackView[i+6]
+            otherPlayerCardsGrid3[i, 0] = otherPlayerCardsLabeledStackView[i+6]
             otherPlayerCardsGrid3.setColumnWidth(i, 150)
         }
 
